@@ -1,0 +1,16 @@
+pnpm-lock.yaml
+*.lock
+
+# Enable the rules below if your `.prettierignore` and `.gitignore` are not in
+# the same directory (e.g. if the app is in a subdirectory).
+#
+# See this issue for more information: https://github.com/prettier/prettier/issues/4081
+#
+# Prettier should ignore `node_modules` in all cases, but it's included here
+# just in case.
+
+# /_*
+# **/_*/**
+# node_modules
+# vendor/
+# dist
