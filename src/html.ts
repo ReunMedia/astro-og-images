@@ -5,10 +5,8 @@ import htm from "htm";
  *
  * @see https://github.com/vercel/satori?tab=readme-ov-file#use-without-jsx
  */
-const html = htm.default.bind(
-  (type: string, props: object, ...children: unknown[]) => {
-    return { type, props: { ...props, children } };
-  },
-);
+const html = htm.bind((type: string, props: object, ...children: unknown[]) => {
+  return { type, props: { ...props, children } };
+});
 
 export { html };
