@@ -1,5 +1,5 @@
-import type { Template } from "./renderTemplate";
-import { createTemplateFilename } from "./utils";
+import type { Template } from "./renderTemplate.ts";
+import { createTemplateFilename } from "./utils.ts";
 
 declare global {
   /**

@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { IMAGE_ASSET_DIRECTORY } from ".";
+import { IMAGE_ASSET_DIRECTORY } from "./integration.ts";
 import type { Font, SatoriOptions } from "satori";
 import { readFile } from "fs/promises";
 
@@ -38,7 +38,7 @@ export type FontData = (Omit<Font, "data"> & {
 })[];
 
 const loadFontData = async (
-  fonts: FontData
+  fonts: FontData,
 ): Promise<SatoriOptions["fonts"]> => {
   const fonts2 = await Promise.all(
     await fonts.map(async (font) => {
@@ -57,7 +57,7 @@ const loadFontData = async (
         ...fontNoData,
         data: await readFile(data),
       };
-    })
+    }),
   );
   return fonts2;
 };

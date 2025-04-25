@@ -1,13 +1,19 @@
 {
   "extends": [
+    "@tsconfig/recommended/tsconfig.json",
     "@tsconfig/strictest/tsconfig.json",
-    "@tsconfig/node-lts/tsconfig.json"
+    "@tsconfig/node-lts/tsconfig.json",
+    "@tsconfig/node-ts/tsconfig.json"
   ],
   "compilerOptions": {
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true
+    "sourceMap": true,
+    // Recommended by JSR
+    "allowImportingTsExtensions": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext"
   },
   "include": ["src"]
 }
