@@ -9,7 +9,7 @@ import { readFile } from "fs/promises";
  * @param template Satori template
  * @returns string Template filename including asset directory
  */
-const createTemplateFilename = (template: Object): string => {
+const createTemplateFilename = (template: object): string => {
   const hash = createHash("sha256")
     .update(template.toString())
     .digest("base64url");

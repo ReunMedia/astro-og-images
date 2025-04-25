@@ -10,7 +10,7 @@ import { loadFontData, type FontData } from "./utils.ts";
  */
 export const IMAGE_ASSET_DIRECTORY = "_ogimages";
 
-export type OgImageOptions = {
+export interface OgImageOptions {
   /**
    * Default width for generated images in pixels.
    *
@@ -24,7 +24,7 @@ export type OgImageOptions = {
    */
   defaultWidth?: number;
   fonts?: FontData | never[];
-};
+}
 
 const defaultOptions = {
   defaultHeight: 627,
@@ -33,8 +33,10 @@ const defaultOptions = {
 } satisfies OgImageOptions;
 
 const createPlugin = (options?: OgImageOptions): AstroIntegration => {
-  const { defaultHeight, defaultWidth } = { ...defaultOptions, ...options };
-  let { fonts } = { ...defaultOptions, ...options };
+  const { defaultHeight, defaultWidth, fonts } = {
+    ...defaultOptions,
+    ...options,
+  };
   return {
     name: "ogimages",
     hooks: {

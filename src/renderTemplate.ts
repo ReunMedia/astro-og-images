@@ -2,13 +2,16 @@ import type { AstroIntegrationLogger } from "astro";
 import satori, { type SatoriOptions as OriginalSatoriOptions } from "satori";
 import sharp from "sharp";
 
-type Dimensions = { width: number; height: number };
+interface Dimensions {
+  width: number;
+  height: number;
+}
 
 type SatoriOptions = Dimensions & OriginalSatoriOptions;
 
 const templateToSvg = async (
   template: Template,
-  satoriOptions: SatoriOptions
+  satoriOptions: SatoriOptions,
 ) => {
   return await satori(template, satoriOptions);
 };
@@ -16,7 +19,7 @@ const templateToSvg = async (
 const svgToPng = async (
   svg: string,
   dimensions: Dimensions,
-  sharpOptions?: sharp.SharpOptions
+  sharpOptions?: sharp.SharpOptions,
 ) => {
   return await sharp(Buffer.from(svg), sharpOptions)
     .resize({ width: dimensions.width, height: dimensions.height })
@@ -24,10 +27,10 @@ const svgToPng = async (
     .toBuffer();
 };
 
-type RenderTemplateOptions = {
+interface RenderTemplateOptions {
   satoriOptions: SatoriOptions;
   sharpOptions?: sharp.SharpOptions;
-};
+}
 
 export type Template = Parameters<typeof satori>[0];
 
@@ -37,7 +40,7 @@ export type Template = Parameters<typeof satori>[0];
 const renderTemplate = async (
   template: Template,
   { satoriOptions, sharpOptions }: RenderTemplateOptions,
-  logger?: AstroIntegrationLogger
+  logger?: AstroIntegrationLogger,
 ) => {
   logger?.debug("Rendering SVG with Satori");
   const svg = await templateToSvg(template, satoriOptions);
@@ -50,7 +53,7 @@ const renderTemplate = async (
       width: satoriOptions.width,
       height: satoriOptions.height,
     },
-    sharpOptions
+    sharpOptions,
   );
   logger?.debug("Converting completed");
 

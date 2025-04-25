@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "lint": "concurrently -p command \"npmPkgJsonLint .\" \"prettier . --check\" \"eslint\"",
+    "lint": "concurrently -p command \"npmPkgJsonLint .\" \"prettier . --check\" \"eslint\" \"tsc --noEmit\"",
     "playground:dev": "pnpm --filter playground dev"
   },
   "dependencies": {

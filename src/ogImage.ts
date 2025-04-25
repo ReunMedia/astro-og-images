@@ -8,6 +8,7 @@ declare global {
    * Global variable is used so that data written in pages, layouts, components
    * etc. can be accessed during build phase.
    */
+  // eslint-disable-next-line no-var
   var astroIntegrationOgimages: {
     /**
      * Templates to render during build.
@@ -25,7 +26,7 @@ const getTemplates = () => {
   return globalThis.astroIntegrationOgimages.templates;
 };
 
-type TemplateOptions = {
+interface TemplateOptions {
   /**
    * Override default width for this image.
    */
@@ -34,7 +35,7 @@ type TemplateOptions = {
    * Override default height for this image.
    */
   customHeight?: number;
-};
+}
 
 const ogImage = (
   /**
