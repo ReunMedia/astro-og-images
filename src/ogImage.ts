@@ -44,8 +44,10 @@ const ogImage = (
   template: Template,
   /**
    * Base URL for generated image file. Pass `Astro.site` here.
+   *
+   * OpenGraph image URLs must be absolute.
    */
-  baseUrl?: string | URL,
+  baseUrl: string | URL,
   templateOptions?: TemplateOptions,
 ) => {
   if (!globalThis.astroIntegrationOgimages) {
@@ -61,10 +63,16 @@ const ogImage = (
     ...templateOptions,
   });
 
-  const url = baseUrl
-    ? new URL(`${assetFilename}`, baseUrl).toString()
-    : `/${assetFilename}`;
-  return url;
+  try {
+    return new URL(`${assetFilename}`, baseUrl).toString();
+  } catch (e) {
+    if (e instanceof TypeError) {
+      throw new TypeError(
+        "'baseUrl' cannot be empty because OpenGraph image URLs must be absolute.",
+      );
+    }
+    throw e;
+  }
 };
 
 export { ogImage, getTemplates };
