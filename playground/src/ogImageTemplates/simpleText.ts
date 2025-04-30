@@ -12,6 +12,7 @@ export default function getTemlate(title: string, description: string) {
         flexDirection: "column",
         fontSize: 16,
         gap: "2em",
+        background: "white",
       }}
     >
       <h1

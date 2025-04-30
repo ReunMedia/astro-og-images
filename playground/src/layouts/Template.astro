@@ -1,0 +1,20 @@
+---
+import Code from "astro/components/Code.astro";
+import Layout from "./Layout.astro";
+import type { Props as LayoutProps } from "./Layout.astro";
+
+interface Props extends LayoutProps {
+  templateName: string;
+  templateCode: string;
+}
+
+const { templateName, templateCode, ...props } = Astro.props;
+---
+
+<Layout {...props}>
+  <div class="container">
+    <h1>{templateName}</h1>
+    <a href="/">Go back</a>
+    <Code code={templateCode} lang="ts" />
+  </div>
+</Layout>

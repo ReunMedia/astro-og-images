@@ -1,0 +1,17 @@
+---
+import { ogImage } from "astro-og-images";
+import Template from "../../layouts/Template.astro";
+import simpleText from "../../ogImageTemplates/simpleText";
+import simpleTextCode from "../../ogImageTemplates/simpleText?raw";
+
+const image = ogImage(
+  simpleText("Hello World!", "Lorem ipsum dolor sit amet"),
+  Astro.site ?? "",
+);
+---
+
+<Template
+  ogImage={image}
+  templateName={"Simple Text"}
+  templateCode={simpleTextCode}
+/>

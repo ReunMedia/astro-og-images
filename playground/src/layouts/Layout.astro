@@ -1,13 +1,13 @@
 ---
-interface Props {
+export interface Props {
   ogTitle?: string;
   ogDescription?: string;
-  ogImage: string;
+  ogImage?: string;
 }
 
 const {
   ogTitle = "My Website",
-  ogImage,
+  ogImage = "",
   ogDescription = "My Description",
 } = Astro.props;
 ---

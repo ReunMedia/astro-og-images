@@ -1,19 +1,24 @@
 ---
+import { parse } from "node:path";
 import Layout from "../layouts/Layout.astro";
-import { ogImage } from "astro-og-images";
-import simpleText from "../ogImageTemplates/simpleText";
-
-const ogImageA = ogImage(
-  simpleText("Hello World!", "Lorem ipsum dolor sit amet"),
-  Astro.site ?? "",
-);
+import { capitalCase } from "change-case";
+const templates = Object.keys(import.meta.glob("./templates/*.astro"));
 ---
 
-<Layout ogImage={ogImageA}>
+<Layout>
   <div class="container">
     <h1>Astro Open Graph Images</h1>
-    <section>
-      <img />
-    </section>
+    <ul>
+      {
+        templates.map((name) => {
+          const p = parse(name);
+          return (
+            <li>
+              <a href={`${p.dir}/${p.name}`}>{capitalCase(p.name)}</a>
+            </li>
+          );
+        })
+      }
+    </ul>
   </div>
 </Layout>
