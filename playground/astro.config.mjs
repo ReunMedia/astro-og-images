@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import ogImages from "astro-og-images";
+import ogImages from "astro-og-images/integration";
 import { resolve } from "path";
 
 // https://astro.build/config

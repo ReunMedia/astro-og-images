@@ -44,6 +44,8 @@ const createPlugin = (options?: OgImageOptions): AstroIntegration => {
         logger.info("astro:config:setup");
       },
       "astro:build:done": async ({ dir, logger }) => {
+        logger.info("Rendering OpenGraph images");
+
         const templates = getTemplates();
 
         logger.debug(`Loading font data for Satori`);
@@ -71,7 +73,7 @@ const createPlugin = (options?: OgImageOptions): AstroIntegration => {
             await writeFile(assetPath, renderedImage);
           }),
         );
-        logger.debug(`All images rendered`);
+        logger.info(`OpenGraph images rendered`);
       },
     },
   };
