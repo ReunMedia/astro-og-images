@@ -13,7 +13,7 @@
     // Recommended by JSR
     "allowImportingTsExtensions": true,
     "module": "NodeNext",
-    "moduleResolution": "nodenext"
+    "moduleResolution": "NodeNext"
   },
   "include": ["src"]
 }
