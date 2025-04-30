@@ -27,12 +27,14 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "lint": "concurrently -p command \"npmPkgJsonLint .\" \"prettier . --check\" \"eslint\" \"tsc --noEmit\"",
-    "playground:dev": "pnpm --filter playground dev"
+    "playground:dev": "pnpm --filter playground dev",
+    "test": "vitest"
   },
   "dependencies": {
     "htm": "^3.1.1",
     "satori": "^0.12.2",
-    "sharp": "^0.34.1"
+    "sharp": "^0.34.1",
+    "vitest": "^3.1.2"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.8",

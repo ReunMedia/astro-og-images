@@ -10,8 +10,10 @@ import { readFile } from "fs/promises";
  * @returns string Template filename including asset directory
  */
 const createTemplateFilename = (template: object): string => {
+  // Naively hashes the result of JSON.stringify , since we expect the template
+  // to be a simple object with no side effects.
   const hash = createHash("sha256")
-    .update(template.toString())
+    .update(JSON.stringify(template))
     .digest("base64url");
   const assetFilename = `${IMAGE_ASSET_DIRECTORY}/${hash}.png`;
   return assetFilename;
