@@ -14,7 +14,14 @@ const { templateName, templateCode, ...props } = Astro.props;
 <Layout {...props}>
   <div class="container">
     <h1>{templateName}</h1>
-    <a href="/">Go back</a>
-    <Code code={templateCode} lang="ts" />
+    <section>
+      <a href="/">Go back</a>
+    </section>
+    <section>
+      <img src={props.ogImage} />
+    </section>
+    <section>
+      <Code code={templateCode} lang="ts" />
+    </section>
   </div>
 </Layout>
