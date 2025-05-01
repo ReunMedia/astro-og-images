@@ -4,7 +4,7 @@ import Template from "../../layouts/Template.astro";
 import gradientBackground from "../../ogImageTemplates/gradientBackground";
 import gradientBackgroundCode from "../../ogImageTemplates/gradientBackground?raw";
 
-const image = ogImage(
+const image = await ogImage(
   gradientBackground({
     title: "Gradient Background",
     description: "Pretty colors!",

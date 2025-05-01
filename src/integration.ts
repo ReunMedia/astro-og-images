@@ -1,77 +1,52 @@
 import type { AstroIntegration } from "astro";
-import { getTemplates } from "./ogImage.ts";
-import { renderTemplate } from "./renderTemplate.ts";
 import { join, normalize } from "path";
 import { mkdir, writeFile } from "fs/promises";
-import { loadFontData, type FontData } from "./utils.ts";
+import globalStore from "./globalStore.ts";
+import {
+  defaultOptions,
+  type IntegrationOptions,
+} from "./IntegrationOptions.ts";
+import { renderTemplate } from "./renderTemplate.ts";
 
 /**
  * Directory inside Astro's build asset directory to store generated images.
  */
 export const IMAGE_ASSET_DIRECTORY = "_ogimages";
 
-export interface OgImageOptions {
-  /**
-   * Default width for generated images in pixels.
-   *
-   * @default 627
-   */
-  defaultHeight?: number;
-  /**
-   * Default width for generated images in pixels.
-   *
-   * @default 1200
-   */
-  defaultWidth?: number;
-  fonts?: FontData | never[];
-}
-
-const defaultOptions = {
-  defaultHeight: 627,
-  defaultWidth: 1200,
-  fonts: [],
-} satisfies OgImageOptions;
-
-const createPlugin = (options?: OgImageOptions): AstroIntegration => {
-  const { defaultHeight, defaultWidth, fonts } = {
+const createPlugin = (options?: IntegrationOptions): AstroIntegration => {
+  const integrationOptions = {
     ...defaultOptions,
     ...options,
   };
+  globalStore.integrationOptions = integrationOptions;
   return {
     name: "ogimages",
     hooks: {
-      "astro:config:setup": ({ logger }) => {
-        logger.info("astro:config:setup");
+      "astro:config:setup": ({ logger, command }) => {
+        if (command === "dev") {
+          logger.debug("Running in dev server. Inline rendering enabled.");
+          // Enable inline rendering in dev mode.
+          globalStore.renderInline = true;
+        }
       },
       "astro:build:done": async ({ dir, logger }) => {
-        logger.info("Rendering OpenGraph images");
-
-        const templates = getTemplates();
-
-        logger.debug(`Loading font data for Satori`);
-        const satoriFonts = await loadFontData(fonts);
+        logger.info(`Rendering ${globalStore.templates.size} OpenGraph images`);
 
         logger.debug(`Creating directory to store images`);
         await mkdir(join(dir.pathname, IMAGE_ASSET_DIRECTORY));
 
+        // Render all templates to files
         await Promise.all(
-          Array.from(templates).map(async ([assetFilename, templateData]) => {
-            const assetPath = normalize(join(dir.pathname, assetFilename));
-            logger.debug(`Rendering template to ${assetPath}`);
-            const renderedImage = await renderTemplate(
-              templateData.template,
-              {
-                satoriOptions: {
-                  height: templateData.customHeight ?? defaultHeight,
-                  width: templateData.customWidth ?? defaultWidth,
-                  fonts: satoriFonts,
-                },
-              },
-              logger,
-            );
-
-            await writeFile(assetPath, renderedImage);
-          }),
+          Array.from(globalStore.templates).map(
+            async ([assetFilename, storedTemplate]) => {
+              const assetPath = normalize(join(dir.pathname, assetFilename));
+              logger.debug(`Rendering template to ${assetPath}`);
+              await writeFile(
+                assetPath,
+                await renderTemplate(storedTemplate, logger),
+              );
+            },
+          ),
         );
         logger.info(`OpenGraph images rendered`);
       },

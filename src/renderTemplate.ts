@@ -1,6 +1,9 @@
 import type { AstroIntegrationLogger } from "astro";
 import satori, { type SatoriOptions as OriginalSatoriOptions } from "satori";
 import sharp from "sharp";
+import type { SatoriTemplate } from "./ogImage.ts";
+import type { StoredTemplate } from "./globalStore.ts";
+import globalStore from "./globalStore.ts";
 
 interface Dimensions {
   width: number;
@@ -9,13 +12,25 @@ interface Dimensions {
 
 type SatoriOptions = Dimensions & OriginalSatoriOptions;
 
+/**
+ * Render a Satori template to SVG
+ *
+ * @returns SVG data
+ */
 const templateToSvg = async (
-  template: Template,
+  satoriTemplate: SatoriTemplate,
   satoriOptions: SatoriOptions,
 ) => {
-  return await satori(template, satoriOptions);
+  return await satori(satoriTemplate, satoriOptions);
 };
 
+/**
+ * Render SVG string to PNG using Sharp
+ *
+ * @param svg SVG data
+ *
+ * @returns PNG data
+ */
 const svgToPng = async (
   svg: string,
   dimensions: Dimensions,
@@ -27,23 +42,21 @@ const svgToPng = async (
     .toBuffer();
 };
 
-interface RenderTemplateOptions {
+export interface RenderTemplateOptions {
   satoriOptions: SatoriOptions;
   sharpOptions?: sharp.SharpOptions;
 }
 
-export type Template = Parameters<typeof satori>[0];
-
 /**
  * Render Satori template to a `.png` image
  */
-const renderTemplate = async (
-  template: Template,
+const renderSatoriTemplate = async (
+  satoriTemplate: SatoriTemplate,
   { satoriOptions, sharpOptions }: RenderTemplateOptions,
   logger?: AstroIntegrationLogger,
 ) => {
   logger?.debug("Rendering SVG with Satori");
-  const svg = await templateToSvg(template, satoriOptions);
+  const svg = await templateToSvg(satoriTemplate, satoriOptions);
   logger?.debug("Rendering completed");
 
   logger?.debug("Converting SVG to PNG with Sharp");
@@ -60,4 +73,32 @@ const renderTemplate = async (
   return png;
 };
 
-export { renderTemplate, templateToSvg, svgToPng };
+const renderTemplate = async (
+  storedTemplate: StoredTemplate,
+  logger?: AstroIntegrationLogger,
+): ReturnType<typeof renderSatoriTemplate> => {
+  // Render template if it's not rendered yet
+  if (!storedTemplate.renderedTemplate) {
+    const options = {
+      satoriOptions: {
+        height:
+          storedTemplate.templateOptions?.customHeight ??
+          globalStore.integrationOptions.defaultHeight,
+        width:
+          storedTemplate.templateOptions?.customWidth ??
+          globalStore.integrationOptions.defaultWidth,
+        fonts: globalStore.integrationOptions.fonts,
+      },
+    };
+
+    storedTemplate.renderedTemplate = await renderSatoriTemplate(
+      storedTemplate.satoriTemplate,
+      options,
+      logger,
+    );
+  }
+
+  return storedTemplate.renderedTemplate;
+};
+
+export { renderTemplate };

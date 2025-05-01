@@ -1,32 +1,9 @@
-import type { Template } from "./renderTemplate.ts";
 import { createTemplateFilename } from "./utils.ts";
+import type satori from "satori";
+import globalStore, { type StoredTemplate } from "./globalStore.ts";
+import { renderTemplate } from "./renderTemplate.ts";
 
-declare global {
-  /**
-   * Global variable that stores integration data.
-   *
-   * Global variable is used so that data written in pages, layouts, components
-   * etc. can be accessed during build phase.
-   */
-  // eslint-disable-next-line no-var
-  var astroIntegrationOgimages: {
-    /**
-     * Templates to render during build.
-     *
-     * Keys represent asset filenames.
-     */
-    templates: Map<string, { template: Template } & TemplateOptions>;
-  };
-}
-
-/**
- * Get templates to render
- */
-const getTemplates = () => {
-  return globalThis.astroIntegrationOgimages.templates;
-};
-
-interface TemplateOptions {
+export interface TemplateOptions {
   /**
    * Override default width for this image.
    */
@@ -37,11 +14,13 @@ interface TemplateOptions {
   customHeight?: number;
 }
 
-const ogImage = (
+export type SatoriTemplate = Parameters<typeof satori>[0];
+
+const ogImage = async (
   /**
    * Satori HTML template.
    */
-  template: Template,
+  satoriTemplate: SatoriTemplate,
   /**
    * Base URL for generated image file. Pass `Astro.site` here.
    *
@@ -49,20 +28,41 @@ const ogImage = (
    */
   baseUrl: string | URL,
   templateOptions?: TemplateOptions,
-) => {
-  if (!globalThis.astroIntegrationOgimages) {
-    globalThis.astroIntegrationOgimages = {
-      templates: new Map(),
-    };
+  /**
+   * Use inline rendering.
+   *
+   * Default: `true` when running dev server, `false` otherwise.
+   */
+  renderInline: boolean = globalStore.renderInline,
+): Promise<string> => {
+  const assetFilename = createTemplateFilename(satoriTemplate);
+
+  // If template is not stored, create it
+  if (!globalStore.templates.has(assetFilename)) {
+    globalStore.templates.set(assetFilename, {
+      templateOptions,
+      satoriTemplate,
+      assetFilename,
+      renderedTemplate: undefined,
+    });
   }
 
-  const assetFilename = createTemplateFilename(template);
+  // Get stored (or just created) template
+  const storedTemplate = globalStore.templates.get(
+    assetFilename,
+  ) as StoredTemplate;
 
-  globalThis.astroIntegrationOgimages.templates.set(assetFilename, {
-    template,
-    ...templateOptions,
-  });
+  // Render template if not yet rendered and inline rendering is requested
+  if (renderInline && !storedTemplate.renderedTemplate) {
+    storedTemplate.renderedTemplate = await renderTemplate(storedTemplate);
+  }
 
+  // If template is rendered inline, return it as data URL
+  if (storedTemplate.renderedTemplate) {
+    return `data:image/png;base64,${storedTemplate.renderedTemplate.toString("base64")}`;
+  }
+
+  // If it's going to be rendered to a file later, return the resulting file URL
   try {
     return new URL(`${assetFilename}`, baseUrl).toString();
   } catch (e) {
@@ -75,4 +75,4 @@ const ogImage = (
   }
 };
 
-export { ogImage, getTemplates };
+export { ogImage };
