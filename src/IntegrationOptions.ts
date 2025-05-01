@@ -13,6 +13,21 @@ export interface IntegrationOptions {
    * @default 1200
    */
   defaultWidth?: number;
+  /**
+   * Fonts used. At least one font is required.
+   *
+   * @example
+   * ```ts
+   * fonts: [
+   *   {
+   *     name: "Roboto",
+   *     data: readFileSync(
+   *       "./node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff",
+   *     ),
+   *   },
+   * ],
+   * ```
+   */
   fonts?: Font[];
 }
 

@@ -1,0 +1,10 @@
+---
+import { ogImage } from "astro-og-images";
+import Template from "../../layouts/Template.astro";
+import sourceCode from "../../ogImageTemplates/minimal?raw";
+import minimal from "../../ogImageTemplates/minimal";
+
+const image = await ogImage(minimal("Hello World!"));
+---
+
+<Template ogImage={image} templateName={"Minimal"} templateCode={sourceCode} />
