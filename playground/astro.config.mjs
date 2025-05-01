@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import ogImages from "astro-og-images/integration";
+import ogImages from "astro-og-images";
 import { resolve } from "path";
 import { readFileSync } from "fs";
 
