@@ -2,19 +2,18 @@
 import { ogImage } from "astro-og-images";
 import Template from "../../layouts/Template.astro";
 import gradientBackground from "../../ogImageTemplates/gradientBackground";
-import gradientBackgroundCode from "../../ogImageTemplates/gradientBackground?raw";
+import sourceCode from "../../ogImageTemplates/gradientBackground?raw";
 
 const image = await ogImage(
   gradientBackground({
     title: "Gradient Background",
     description: "Pretty colors!",
   }),
-  Astro.site ?? "",
 );
 ---
 
 <Template
   ogImage={image}
   templateName={"Gradient Background"}
-  templateCode={gradientBackgroundCode}
+  templateCode={sourceCode}
 />

@@ -2,16 +2,15 @@
 import { ogImage } from "astro-og-images";
 import Template from "../../layouts/Template.astro";
 import backgroundImageAndLogo from "../../ogImageTemplates/backgroundImageAndLogo";
-import backgroundImageAndLogoCode from "../../ogImageTemplates/backgroundImageAndLogo?raw";
+import sourceCode from "../../ogImageTemplates/backgroundImageAndLogo?raw";
 
 const image = await ogImage(
   backgroundImageAndLogo("Background Image", "With logo in top right corner"),
-  Astro.site ?? "",
 );
 ---
 
 <Template
   ogImage={image}
   templateName={"Background Image And Logo"}
-  templateCode={backgroundImageAndLogoCode}
+  templateCode={sourceCode}
 />

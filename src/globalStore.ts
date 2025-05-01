@@ -26,6 +26,12 @@ interface GlobalStore {
    * Enabled in dev mode, disabled otherwise.
    */
   renderInline: boolean;
+  /**
+   * `Astro.site` config option.
+   *
+   * Used to construct absolute URL in `ogImage`.
+   */
+  site: string;
 }
 
 declare global {
@@ -45,6 +51,7 @@ if (!globalThis.astroIntegrationOgimages) {
     templates: new Map(),
     integrationOptions: defaultOptions,
     renderInline: false,
+    site: "",
   };
 }
 

@@ -22,12 +22,14 @@ const createPlugin = (options?: IntegrationOptions): AstroIntegration => {
   return {
     name: "ogimages",
     hooks: {
-      "astro:config:setup": ({ logger, command }) => {
+      "astro:config:setup": ({ config, logger, command }) => {
         if (command === "dev") {
           logger.debug("Running in dev server. Inline rendering enabled.");
           // Enable inline rendering in dev mode.
           globalStore.renderInline = true;
         }
+
+        globalStore.site = config.site ?? "";
       },
       "astro:build:done": async ({ dir, logger }) => {
         logger.info(`Rendering ${globalStore.templates.size} OpenGraph images`);

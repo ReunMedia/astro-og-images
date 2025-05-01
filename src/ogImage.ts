@@ -21,12 +21,6 @@ const ogImage = async (
    * Satori HTML template.
    */
   satoriTemplate: SatoriTemplate,
-  /**
-   * Base URL for generated image file. Pass `Astro.site` here.
-   *
-   * OpenGraph image URLs must be absolute.
-   */
-  baseUrl: string | URL,
   templateOptions?: TemplateOptions,
   /**
    * Use inline rendering.
@@ -64,11 +58,11 @@ const ogImage = async (
 
   // If it's going to be rendered to a file later, return the resulting file URL
   try {
-    return new URL(`${assetFilename}`, baseUrl).toString();
+    return new URL(`${assetFilename}`, globalStore.site).toString();
   } catch (e) {
     if (e instanceof TypeError) {
-      throw new TypeError(
-        "'baseUrl' cannot be empty because OpenGraph image URLs must be absolute.",
+      throw new Error(
+        "`Astro.site` config option must be set for OpenGraph images.",
       );
     }
     throw e;
