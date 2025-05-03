@@ -30,8 +30,7 @@ pnpm add astro-og-images
 // astro.config.mjs
 import { defineConfig } from "astro/config";
 import ogImages from "astro-og-images";
-import { resolve } from "path";
-import { readFileSync } from "fs";
+import { readFile } from "fs/promises";
 
 export default defineConfig({
   // OpenGraph images require a valid site configuration
@@ -42,7 +41,7 @@ export default defineConfig({
       fonts: [
         {
           name: "Roboto",
-          data: readFileSync(
+          data: await readFile(
             "./node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff",
           ),
         },
