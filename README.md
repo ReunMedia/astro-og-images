@@ -5,7 +5,8 @@ than most alternatives.
 
 > [!IMPORTANT]
 >
-> Only static build is currently supported.
+> Only static build and dev mode are currently supported, but since dev mode
+> uses on-demand rendering, a custom SSR implementation is possible.
 
 ## Getting started
 
@@ -101,8 +102,8 @@ const image = await ogImage(myTemplate("Hello World!"));
 </html>
 ```
 
-Since `ogImage()` simply returns an absolute URL, you can reuse the same image
-for other purposes (such as [oEmbed](https://oembed.com/)).
+Since `ogImage()` simply returns an absolute URL, you can use the images for
+other purposes such as [oEmbed](https://oembed.com/).
 
 ### Preview images during development
 
@@ -126,3 +127,27 @@ If you want to preview the HTML template during development, you can check out
 [`OgTemplatePreview.astro`](./src/components/OgTemplatePreview.astro) component
 as an example, however **you should always preview the rendered image**, because
 some HTML may be rendered differently by Satori.
+
+## Motivation
+
+There are multiple OpenGraph image integrations for Astro already. Here's why
+this one exists:
+
+- Uses [sharp](https://github.com/lovell/sharp) instead of
+  [resvg-js](https://github.com/thx/resvg-js) to render Satori SVG to PNG. Astro
+  already uses sharp for image processing, so it makes sense to use the same
+  package for OpenGraph images as well.
+- Doesn't require (but supports) React. If you don't use React (or Preact),
+  pulling a complete framework as a dependency just of OpenGraph images seems
+  ovekill. Since [Satori also supports
+  "React-elements-like-objeccts"](https://github.com/vercel/satori?tab=readme-ov-file#use-without-jsx)
+  in addition to JSX, we use [htm](https://github.com/developit/htm) with a
+  [custom renderer](src/html.ts) instead. JSX is supported by simply passing a
+  JSX template to `ogImage()`.
+- Doesn't rewrite output HTML and you get the URL before build is done. Other
+  integrations work by manipulating `og:image` tags in the built HTML files.
+  This makes it impossible to use the same (or different) image with `oEmbed`
+  for example. Since this library gives you the resulting URL beforehand, you
+  can do things like display the image in `<img>` tag.
+- Allows you to preview OG images during development. This feature is not unique
+  to this library, but our implementation provides more flexibility.
