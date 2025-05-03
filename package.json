@@ -21,12 +21,16 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "lint": "concurrently -p command \"npmPkgJsonLint .\" \"prettier . --check\" \"eslint\" \"tsc --noEmit\"",
+    "prepack": "pnpm lint && pnpm build",
     "playground:dev": "pnpm --filter playground dev",
     "test": "vitest"
   },
