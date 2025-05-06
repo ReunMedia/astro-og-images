@@ -7,7 +7,9 @@
     "astro-component",
     "withastro",
     "astro",
-    "opengraph"
+    "opengraph",
+    "oembed",
+    "image"
   ],
   "homepage": "https://github.com/ReunMedia/astro-og-images",
   "license": "MIT",
