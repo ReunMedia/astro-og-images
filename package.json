@@ -22,9 +22,8 @@
   },
   "files": [
     "dist",
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md"
+    "src",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "del-cli dist/* && tsc",
