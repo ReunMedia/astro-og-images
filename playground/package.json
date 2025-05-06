@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^5.2.5",
+    "@reunmedia/astro-og-images": "../.",
     "astro": "^5.7.5",
-    "astro-og-images": "../.",
     "change-case": "^5.4.4",
     "deepmerge-ts": "^7.1.5"
   }

@@ -11,12 +11,12 @@ importers:
       '@fontsource/roboto':
         specifier: ^5.2.5
         version: 5.2.5
+      '@reunmedia/astro-og-images':
+        specifier: ../.
+        version: link:..
       astro:
         specifier: ^5.7.5
         version: 5.7.5(rollup@4.40.0)(typescript@5.8.3)
-      astro-og-images:
-        specifier: ../.
-        version: link:..
       change-case:
         specifier: ^5.4.4
         version: 5.4.4

@@ -1,4 +1,4 @@
-import { html } from "astro-og-images";
+import { html } from "@reunmedia/astro-og-images";
 import bgData from "../assets/ogBg.png?url&inline";
 import logo from "../assets/ogLogo.svg";
 import logoData from "../assets/ogLogo.svg?url&inline";

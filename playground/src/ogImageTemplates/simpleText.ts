@@ -1,4 +1,4 @@
-import { html } from "astro-og-images";
+import { html } from "@reunmedia/astro-og-images";
 
 export default function simpleText(title: string, description: string) {
   return html`

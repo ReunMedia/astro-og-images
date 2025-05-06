@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import ogImages from "astro-og-images";
+import ogImages from "@reunmedia/astro-og-images";
 import { readFile } from "fs/promises";
 
 // https://astro.build/config

@@ -1,4 +1,4 @@
-import { html } from "astro-og-images";
+import { html } from "@reunmedia/astro-og-images";
 import { deepmerge } from "deepmerge-ts";
 
 interface TemplateOptions {

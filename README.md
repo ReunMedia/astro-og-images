@@ -15,13 +15,13 @@ than most alternatives.
 Usng `astro add`:
 
 ```sh
-pnpm astro add astro-og-images
+pnpm astro add @reunmedia/astro-og-images
 ```
 
 Manually:
 
 ```sh
-pnpm add astro-og-images
+pnpm add @reunmedia/astro-og-images
 ```
 
 ### Configure integration
@@ -29,7 +29,7 @@ pnpm add astro-og-images
 ```mjs
 // astro.config.mjs
 import { defineConfig } from "astro/config";
-import ogImages from "astro-og-images";
+import ogImages from "@reunmedia/astro-og-images";
 import { readFile } from "fs/promises";
 
 export default defineConfig({
@@ -64,7 +64,7 @@ configuration options.
 
 ```ts
 // src/ogImageTemplates/myTemplate.ts
-import { html } from "astro-og-images";
+import { html } from "@reunmedia/astro-og-images";
 
 export default function myTemplate(text: string) {
   return html`
@@ -86,7 +86,7 @@ JSX](https://github.com/vercel/satori?tab=readme-ov-file#jsx) as well.
 
 ```astro
 ---
-import { ogImage } from "astro-og-images";
+import { ogImage } from "@reunmedia/astro-og-images";
 import myTemplate from "../ogImageTemplates/myTemplate";
 
 // ogImage returns absolute URL to rendered image
@@ -113,7 +113,7 @@ using `<img>` tag:
 
 ```astro
 ---
-import { ogImage } from "astro-og-images";
+import { ogImage } from "@reunmedia/astro-og-images";
 import myTemplate from "../ogImageTemplates/myTemplate";
 
 const image = await ogImage(myTemplate("Hello World!"));
