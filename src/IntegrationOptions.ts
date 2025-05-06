@@ -2,7 +2,7 @@ import type { Font } from "satori";
 
 export interface IntegrationOptions {
   /**
-   * Default width for generated images in pixels.
+   * Default height for generated images in pixels.
    *
    * @default 627
    */
@@ -21,7 +21,7 @@ export interface IntegrationOptions {
    * fonts: [
    *   {
    *     name: "Roboto",
-   *     data: readFileSync(
+   *     data: await readFile(
    *       "./node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff",
    *     ),
    *   },

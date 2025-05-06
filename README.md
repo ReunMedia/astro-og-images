@@ -147,6 +147,6 @@ this one exists:
   integrations work by manipulating `og:image` tags in the built HTML files.
   This makes it impossible to use the same (or different) image with `oEmbed`
   for example. Since this library gives you the resulting URL beforehand, you
-  can do things like display the image in `<img>` tag.
+  can even do things like display the image in `<img>` tag.
 - Allows you to preview OG images during development. This feature is not unique
   to this library, but our implementation provides more flexibility.
