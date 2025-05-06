@@ -137,7 +137,7 @@ this one exists:
   already uses sharp for image processing, so it makes sense to use the same
   package for OpenGraph images as well.
 - Doesn't require (but supports) React. If you don't use React (or Preact),
-  pulling a complete framework as a dependency just of OpenGraph images seems
+  pulling a complete framework as a dependency just for OpenGraph images seems
   ovekill. Since [Satori also supports
   "React-elements-like-objeccts"](https://github.com/vercel/satori?tab=readme-ov-file#use-without-jsx)
   in addition to JSX, we use [htm](https://github.com/developit/htm) with a
