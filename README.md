@@ -122,10 +122,55 @@ const image = await ogImage(myTemplate("Hello World!"));
 <img style="max-width: 100%;" src={image} />
 ```
 
-If you want to preview the HTML template during development, you can check out
-[`OgTemplatePreview.astro`](./src/components/OgTemplatePreview.astro) component
-as an example, however **you should always preview the rendered image**, because
-some HTML may be rendered differently by Satori.
+### Previewing template as HTML
+
+If you're not using React or Preact and want to preview template HTML during
+development, you can do so by following these steps:
+
+1. Install dependencies to render template to HTML
+
+```sh
+pnpm add -D preact preact-render-to-string htm
+```
+
+2. Temporarily change your template to render into Preact template
+
+```ts
+// src/ogImageTemplates/myTemplate.ts
+// import { html } from "@reunmedia/astro-og-images";
+import { html } from "htm/preact";
+
+export default function myTemplate(text: string) {
+  return html`
+    <div style=${{ display: "flex" }}>
+      <p>${text}</p>
+    </div>
+  `;
+}
+```
+
+3. Render template using `preact-render-to-string` and pass it to
+   [`OgTemplatePreview.astro`](./src/components/OgTemplatePreview.astro)
+   component
+
+```astro
+---
+// src/pages/og-preview.astro
+import { render } from "preact-render-to-string";
+import { OgTemplatePreview } from "@reunmedia/astro-og-images/components";
+import myTemplate from "../ogImageTemplates/myTemplate";
+
+const templateHtml = render(myTemplate("Hello World!"));
+---
+
+<OgTemplatePreview templateHtml={templateHtml} />
+```
+
+> [!IMPORTANT]
+>
+> **You should always [preview the rendered
+> image](#preview-images-during-development)**, because some HTML may be
+> rendered differently by Satori.
 
 ## Motivation
 
