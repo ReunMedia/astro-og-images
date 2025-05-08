@@ -25,24 +25,11 @@ const fontFamily = globalStore.integrationOptions.fonts[0]?.name;
   </div>
 </div>
 
-<style is:global>
-  .container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+<style>
+  .container :global(*),
+  .container :global(*):before,
+  .container :global(*):after {
     box-sizing: border-box;
-    overflow: auto;
-  }
-  *,
-  *:before,
-  *:after {
     /* Reset all font weights to normal to (hopefully) match Satori defaults. */
     font-weight: normal;
   }
