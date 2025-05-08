@@ -1,14 +1,14 @@
 ---
+import { html } from "htm/preact";
 import { render } from "preact-render-to-string";
 import { OgTemplatePreview } from "@reunmedia/astro-og-images/components";
-import gradientBackground from "../ogImageTemplates/gradientBackground";
+import minimal from "../ogImageTemplates/minimal";
 
-const templateHtml = render(
-  gradientBackground({
-    title: "HTML Example",
-    description: "Example on how to preview HTML using Preact",
-  }),
-);
+const a = minimal("Hello!", html);
+const templateHtml = render(a);
+const b = minimal("Hello!");
 ---
 
-<OgTemplatePreview templateHtml={templateHtml} />
+<body style={{ margin: 0 }}>
+  <OgTemplatePreview templateHtml={templateHtml} />
+</body>

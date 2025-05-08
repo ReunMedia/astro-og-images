@@ -1,5 +1,4 @@
-// This example uses `htm/preact` as renderer for HTML preview example
-import { html } from "htm/preact";
+import { html } from "@reunmedia/astro-og-images";
 import { deepmerge } from "deepmerge-ts";
 
 interface TemplateOptions {

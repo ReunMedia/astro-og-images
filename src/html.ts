@@ -1,5 +1,10 @@
 import htm from "htm";
 
+export type Renderer<T> = (
+  strings: TemplateStringsArray,
+  ...values: unknown[]
+) => T;
+
 /**
  * Custom renderer that creates "React-elements-like objects" to pass to Satori.
  *
