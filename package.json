@@ -1,6 +1,6 @@
 {
   "name": "@reunmedia/astro-og-images",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Open Graph image generator for Astro",
   "keywords": [
     "astro-integration",
