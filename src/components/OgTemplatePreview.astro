@@ -1,35 +1,49 @@
 ---
+import globalStore from "../globalStore.ts";
+
 interface Props {
+  templateHtml: string;
   width: number;
   height: number;
-  templateHtml: string;
+  backgroundColor: string;
 }
 
-const { width, height, templateHtml } = Astro.props;
+const {
+  templateHtml,
+  width = globalStore.integrationOptions.defaultWidth,
+  height = globalStore.integrationOptions.defaultHeight,
+  backgroundColor = "#0e0e0e",
+} = Astro.props;
+
+// Get default font family to match Satori behaviour
+const fontFamily = globalStore.integrationOptions.fonts[0]?.name;
 ---
 
-<div class="container">
+<div class="container" style={{ backgroundColor, fontFamily }}>
   <div style={{ width: `${width}px`, height: `${height}px` }}>
     <Fragment set:html={templateHtml} />
   </div>
 </div>
 
-<style>
+<style is:global>
   .container {
-    width: 100%;
-    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    background: #0e0e0e;
+    overflow: auto;
   }
   *,
   *:before,
   *:after {
-    box-sizing: inherit;
-    margin: 0;
+    /* Reset all font weights to normal to (hopefully) match Satori defaults. */
+    font-weight: normal;
   }
 </style>

@@ -19,6 +19,9 @@
   "exports": {
     ".": {
       "default": "./src/index.ts"
+    },
+    "./components": {
+      "default": "./src/components/index.ts"
     }
   },
   "files": [
