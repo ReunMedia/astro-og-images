@@ -1,4 +1,5 @@
-import { html } from "@reunmedia/astro-og-images";
+// This example uses `htm/preact` as renderer for HTML preview example
+import { html } from "htm/preact";
 import { deepmerge } from "deepmerge-ts";
 
 interface TemplateOptions {

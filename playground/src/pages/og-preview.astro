@@ -1,0 +1,14 @@
+---
+import { render } from "preact-render-to-string";
+import { OgTemplatePreview } from "@reunmedia/astro-og-images/components";
+import gradientBackground from "../ogImageTemplates/gradientBackground";
+
+const templateHtml = render(
+  gradientBackground({
+    title: "HTML Example",
+    description: "Example on how to preview HTML using Preact",
+  }),
+);
+---
+
+<OgTemplatePreview templateHtml={templateHtml} />
