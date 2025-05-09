@@ -12,7 +12,7 @@ than most alternatives.
 
 ### Install package
 
-Usng `astro add`:
+Using `astro add`:
 
 ```sh
 pnpm astro add @reunmedia/astro-og-images
