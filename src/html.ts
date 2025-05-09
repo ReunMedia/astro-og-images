@@ -1,5 +1,8 @@
 import htm from "htm";
 
+/**
+ * Compiler type used for type-safe HTML template preview.
+ */
 export type Compiler<T> = (
   strings: TemplateStringsArray,
   ...values: unknown[]
