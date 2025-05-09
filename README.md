@@ -133,15 +133,17 @@ development, you can do so by following these steps:
 pnpm add -D preact preact-render-to-string htm
 ```
 
-2. Temporarily change your template to render into Preact template
+2. Add custom compiler parameter to your template
 
 ```ts
 // src/ogImageTemplates/myTemplate.ts
-// import { html } from "@reunmedia/astro-og-images";
-import { html } from "htm/preact";
+import { html } from "@reunmedia/astro-og-images";
+import type { Compiler } from "@reunmedia/astro-og-images";
 
-export default function myTemplate(text: string) {
-  return html`
+export default function myTemplate(text: string): ReturnType<typeof html>;
+export default function myTemplate<T>(text: string, compiler: Compiler<T>): T;
+export default function myTemplate<T>(text: string, compiler?: Compiler<T>) {
+  return (compiler || html)/* html */ `
     <div style=${{ display: "flex" }}>
       <p>${text}</p>
     </div>
@@ -149,26 +151,41 @@ export default function myTemplate(text: string) {
 }
 ```
 
-3. Render template using `preact-render-to-string` and pass it to
+If you don't want to add the compiler parameter, you can alternatively just
+temporarily change the `html` compiler in the template:
+
+```ts
+// src/ogImageTemplates/myTemplate.ts
+// import { html } from "@reunmedia/astro-og-images";
+import { html } from "htm/preact";
+```
+
+3. Compile template using `htm/preact` compiler, render template using
+   `preact-render-to-string` and pass it to
    [`OgTemplatePreview.astro`](./src/components/OgTemplatePreview.astro)
-   component
+   component. It's best to use a blank page to prevent global CSS from affecting
+   the template.
 
 ```astro
 ---
 // src/pages/og-preview.astro
+import { html } from "htm/preact";
 import { render } from "preact-render-to-string";
 import { OgTemplatePreview } from "@reunmedia/astro-og-images/components";
 import myTemplate from "../ogImageTemplates/myTemplate";
 
-const templateHtml = render(myTemplate("Hello World!"));
+const preactTemplate = myTemplate("Hello World!", html);
+const templateHtml = render(preactTemplate);
 ---
 
-<OgTemplatePreview templateHtml={templateHtml} />
+<body style={{ margin: 0 }}>
+  <OgTemplatePreview templateHtml={templateHtml} />
+</body>
 ```
 
 > [!IMPORTANT]
 >
-> **You should always [preview the rendered
+> **You should also always [preview the rendered
 > image](#preview-images-during-development)**, because some HTML may be
 > rendered differently by Satori.
 
