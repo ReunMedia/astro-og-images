@@ -3,12 +3,17 @@ import { html } from "htm/preact";
 import { render } from "preact-render-to-string";
 import { OgTemplatePreview } from "@reunmedia/astro-og-images/components";
 import minimal from "../ogImageTemplates/minimal";
+import { ogImage } from "@reunmedia/astro-og-images";
 
-const a = minimal("Hello!", html);
-const templateHtml = render(a);
-const b = minimal("Hello!");
+const preactTemplate = minimal("Hello World!", html);
+const templateHtml = render(preactTemplate);
+const satoriTemplate = minimal("Hello World!");
+const image = await ogImage(satoriTemplate);
 ---
 
 <body style={{ margin: 0 }}>
+  <h1>HTML</h1>
   <OgTemplatePreview templateHtml={templateHtml} />
+  <h1>Image</h1>
+  <img src={image} />
 </body>

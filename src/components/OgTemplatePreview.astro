@@ -5,30 +5,29 @@ interface Props {
   templateHtml: string;
   width?: number;
   height?: number;
-  backgroundColor?: string;
 }
 
 const {
   templateHtml,
   width = globalStore.integrationOptions.defaultWidth,
   height = globalStore.integrationOptions.defaultHeight,
-  backgroundColor = "#0e0e0e",
 } = Astro.props;
 
 // Get default font family to match Satori behaviour
 const fontFamily = globalStore.integrationOptions.fonts[0]?.name;
 ---
 
-<div class="container" style={{ backgroundColor, fontFamily }}>
-  <div style={{ width: `${width}px`, height: `${height}px` }}>
-    <Fragment set:html={templateHtml} />
-  </div>
+<div
+  class="ogTemplateWrapper"
+  style={{ fontFamily, width: `${width}px`, height: `${height}px` }}
+>
+  <Fragment set:html={templateHtml} />
 </div>
 
 <style>
-  .container :global(*),
-  .container :global(*):before,
-  .container :global(*):after {
+  .ogTemplateWrapper :global(*),
+  .ogTemplateWrapper :global(*):before,
+  .ogTemplateWrapper :global(*):after {
     box-sizing: border-box;
     /* Reset all font weights to normal to (hopefully) match Satori defaults. */
     font-weight: normal;
