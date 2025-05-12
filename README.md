@@ -24,6 +24,9 @@ Manually:
 pnpm add @reunmedia/astro-og-images
 ```
 
+You may also need to [add `sharp` as a dependency](#cannot-find-package-sharp)
+in order to build your site.
+
 ### Configure integration
 
 ```mjs
@@ -188,6 +191,21 @@ const templateHtml = render(preactTemplate);
 > **You should also always [preview the rendered
 > image](#preview-images-during-development)**, because some HTML may be
 > rendered differently by Satori.
+
+## Troubleshooting
+
+### Cannot find package 'sharp'
+
+If you get the following error when trying to build your site:
+
+> "Cannot find package 'sharp' imported from [...]  
+> Did you mean to import "sharp/lib/index.js"?"
+
+You can fix it by installing sharp as a direct dependency:
+
+```sh
+pnpm add sharp
+```
 
 ## Motivation
 
