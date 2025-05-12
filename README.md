@@ -90,12 +90,12 @@ import { ogImage } from "@reunmedia/astro-og-images";
 import myTemplate from "../ogImageTemplates/myTemplate";
 
 // ogImage returns absolute URL to rendered image
-const image = await ogImage(myTemplate("Hello World!"));
+const imageUrl = await ogImage(myTemplate("Hello World!"));
 ---
 
 <html lang="en">
   <head>
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={imageUrl} />
   </head>
   ...
 </html>
