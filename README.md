@@ -119,10 +119,10 @@ using `<img>` tag:
 import { ogImage } from "@reunmedia/astro-og-images";
 import myTemplate from "../ogImageTemplates/myTemplate";
 
-const image = await ogImage(myTemplate("Hello World!"));
+const imageUrl = await ogImage(myTemplate("Hello World!"));
 ---
 
-<img style="max-width: 100%;" src={image} />
+<img style="max-width: 100%;" src={imageUrl} />
 ```
 
 ### Previewing template as HTML
