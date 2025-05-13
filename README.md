@@ -192,6 +192,32 @@ const templateHtml = render(preactTemplate);
 > image](#preview-images-during-development)**, because some HTML may be
 > rendered differently by Satori.
 
+### Static OG images
+
+This is how you can use static image assets as OpenGraph images:
+
+```astro
+---
+import staticOgImageSource from "../../assets/staticOgImage.avif";
+import { getImage } from "astro:assets";
+
+const imageUrl = new URL(
+  (await getImage({ src: staticOgImageSource, format: "png" })).src,
+  Astro.url,
+).href;
+---
+
+<html lang="en">
+  <head>
+    <meta property="og:image" content={imageUrl} />
+  </head>
+  ...
+</html>
+```
+
+This obviously doesn't require any rendering and if you only use static images
+you don't need this package at all.
+
 ## Troubleshooting
 
 ### Cannot find package 'sharp'

@@ -1,0 +1,17 @@
+---
+import Template from "../../layouts/Template.astro";
+import staticOgImageSource from "../../assets/staticOgImage.avif";
+import sourceCode from "./staticImage.astro?raw";
+import { getImage } from "astro:assets";
+
+const imageUrl = new URL(
+  (await getImage({ src: staticOgImageSource, format: "png" })).src,
+  Astro.url,
+).href;
+---
+
+<Template
+  ogImage={imageUrl}
+  templateName={"Static Image"}
+  templateCode={sourceCode}
+/>
