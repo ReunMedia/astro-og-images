@@ -1,5 +1,7 @@
 # Astro OG Images
 
+[![NPM Version](https://img.shields.io/npm/v/%40reunmedia%2Fastro-og-images)](https://www.npmjs.com/package/@reunmedia/astro-og-images)
+
 Yet another Astro integration to generate Open Graph images. More lightweight
 than most alternatives.
 
