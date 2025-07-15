@@ -1,5 +1,5 @@
 import { it, describe } from "vitest";
-import { createTemplateFilename } from "../../dist/utils";
+import { createTemplateFilename } from "../../src/utils";
 import simpleText from "../fixtures/templates/simpleText";
 import { expect } from "vitest";
 
