@@ -41,7 +41,6 @@ declare global {
    * Global variable is used so that data written in pages, layouts, components
    * etc. can be accessed during build phase.
    */
-  // eslint-disable-next-line no-var
   var astroIntegrationOgimages: GlobalStore;
 }
 
