@@ -148,7 +148,7 @@ import type { Compiler } from "@reunmedia/astro-og-images";
 export default function myTemplate(text: string): ReturnType<typeof html>;
 export default function myTemplate<T>(text: string, compiler: Compiler<T>): T;
 export default function myTemplate<T>(text: string, compiler?: Compiler<T>) {
-  return (compiler || html)/* html */ `
+  return (compiler || html) /* html */ `
     <div style=${{ display: "flex" }}>
       <p>${text}</p>
     </div>
