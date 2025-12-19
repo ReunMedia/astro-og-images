@@ -9,15 +9,15 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@fontsource/roboto": "^5.2.5",
+    "@fontsource/roboto": "^5.2.9",
     "@reunmedia/astro-og-images": "link:..",
-    "astro": "^5.7.10",
+    "astro": "^5.16.6",
     "change-case": "^5.4.4",
     "deepmerge-ts": "^7.1.5"
   },
   "devDependencies": {
     "htm": "^3.1.1",
-    "preact": "^10.26.6",
-    "preact-render-to-string": "^6.5.13"
+    "preact": "^10.28.0",
+    "preact-render-to-string": "^6.6.4"
   }
 }
